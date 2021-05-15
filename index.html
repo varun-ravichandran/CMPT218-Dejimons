@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous" />
+
+    <title>Dejimons</title>
+</head>
+
+<body style="background-color: lightskyblue;" onload="myfunction()">
+    <div class="w-100 p-3 h-100 d-inline-block">
+        <table class="table table-striped table-dark" id="list">
+            <thead>
+                <tr>
+                    <th scope="col" id="name">Name</th>
+                    <th scope="col" id="type">Type</th>
+                    <th scope="col">More Information</th>
+                    <th scope="col">Delete</th>
+                </tr>
+            </thead>
+            <tbody id="front">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td><button id="add" class="btn btn-sm bg-white"><a href="form.html"
+                                class="btn btn-block text-muted text-dark bg-white">ADD</a></button></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script src="DejimonModel.js"></script>
+    <script src="DejimonService.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        function myfunction() {
+            var p = new DejimonServices();
+
+            const exisitingDejimons = p.getAll();
+            if(exisitingDejimons.length)
+            {
+                document.getElementById('front').innerHTML = '';
+                for (var i = 0; i < exisitingDejimons.length; i++) {
+                    var { name, type, id } = exisitingDejimons[i];
+                    document.getElementById('front').innerHTML +=`
+                    <tr> 
+                        <td>${name}</td>
+                        <td> ${type}</td>
+                        <td><button id="more" class="btn btn-sm btn-outline-light" ><a href="moreInformations.html?id=${id}" class="btn text-muted text-light">More Info</a></button></td>
+                        <td><button id="delete" class="btn btn-lg btn-block btn-danger badge-pill" onclick="deleteDejimon('${id}')">X</button></td>
+                        </tr>`;
+                }
+            }
+            else{
+                document.getElementById('front').innerHTML = `
+                <tr>
+                    <td colspan="4">No Data in local storage, add data by clicking the "ADD" button below</td>
+                </tr>`;
+            } 
+                
+        }
+
+        function deleteDejimon(id){
+            console.log(id);
+            var value= confirm('do you want to delete');
+            if(value){
+                var p = new DejimonServices();
+                p.removeDejimonById(id);    
+                myfunction();
+            }
+        }
+    </script>
+
+
+</body>
+
+</html>

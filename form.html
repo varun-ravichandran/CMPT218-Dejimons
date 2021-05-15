@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+    <title>Dejimons</title>
+</head>
+
+<body style="background-color: lightcoral;">
+    <div class="mx-auto" style="width:55%; height: 60%; margin-top: 15%;">
+        <table class="table table-striped table-dark">
+            <thead>
+                <tr>
+                    <th scope='col'>
+                        <h3>Add New Dejimon:</h3>
+                    </th>
+                    <th><a href="index.html" class="btn-close btn-lg btn-close-white" style="float: right;" role="button"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <form id="myform" >
+                    <tr class="col">
+                        <td><label>Name</label></td>
+                        <td><input type="text" id="name" name="name" placeholder="type here" style="background-color: inherit; border: none; color: white;"></td>
+                    </tr>
+                    <tr class="col">
+                        <td><label>Height</label></td>
+                        <td><input type="text" id="height" name="height" placeholder="type here" style="background-color: inherit; border: none; color: white;"></td>
+                    </tr>
+                    <tr class="col">
+                        <td><label>Weight</label></td>
+                        <td><input type="text" id="weight" name="weight" placeholder="type here" style="background-color: inherit; border: none; color: white;"></td>
+                    </tr>
+                    <tr class="col">
+                        <td><label>Type</label></td>
+                        <td>
+                            <select id="type" class="custom-select" onchange="displayAbility(this)" style="background-color: inherit; border: none; color: white;">
+                                <option selected value="-1">choose a type</option>
+                                <option value="yorkshire">Yorkshire</option>
+                                <option value="lean">Lean</option>
+                                <option value="potbelly">Potbelly</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr id="iceAbilitytr" class="col" style="display: none;">
+                        <td><label>Ice Abiltiy</label></td>
+                        <td><input type="text" id="iceAbility" name="ability" placeholder="type here" style="background-color: inherit; border: none; color: white;"></td>
+                    </tr>
+                    <tr id="fireAbilitytr" class="col" style="display: none;">
+                        <td><label>Fire Abiltiy</label></td>
+                        <td><input type="text" id="fireAbility" name="ability" placeholder="type here" style="background-color: inherit; border: none; color: white;"></td>
+                    </tr>
+                    <tr id="electricAbilitytr" class="col" style="display: none;">
+                        <td><label>Electric Abiltiy</label></td>
+                        <td><input type="text" id="electricAbility" name="ability" placeholder="type here" style="background-color: inherit; border: none; color: white;"></td>
+                    </tr>
+                    
+                    
+                </form>
+            </tbody>
+            <tfoot>
+                <tr class="col">
+                    <td colspan="1"></td>
+                    <td><button type="button" id="submit" onclick="hideAllAbility(this)"
+                            class="btn btn-block btn-success">Submit</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <script src="DejimonModel.js"></script>
+    <script src="DejimonService.js"></script>
+    <script src="main.js"></script>
+
+    <script>
+        function hideAllAbility(){
+            const allAbiltiestr= [ 'iceAbilitytr','fireAbilitytr','electricAbilitytr'];
+            for(var i=0; i<allAbiltiestr.length; i++){
+                document.getElementById(allAbiltiestr[i]).style.display = "none";
+            }
+        }
+        function displayAbility(selectedObj){
+            hideAllAbility();
+            const selectedType = selectedObj.value;
+            var ability='';
+            if(selectedType === 'yorkshire'){
+                ability='iceAbilitytr';
+            }
+            else if(selectedType === 'lean'){
+                ability='fireAbilitytr';
+            }
+            else if(selectedType === 'potbelly'){
+                ability='electricAbilitytr';
+            }
+            console.log(ability);
+            document.getElementById(ability).style.display = "table-row";
+        }
+    </script>
+
+</body>
+
+</html>

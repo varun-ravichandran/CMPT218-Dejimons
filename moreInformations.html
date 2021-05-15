@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>Dejimons</title>
+</head>
+
+<body style="background-color: lightgreen;">
+    <div class="mx-auto" style="width:40%; height: 90%; margin-top: 15%;">
+    <table class="table table-striped table-dark">
+        <thead>
+            <tr>
+                <th scope='col'>
+                    <h3>More Information</h3>
+                </th>
+                <th scope='col'><a href="index.html" class="btn-close btn-lg btn-close-white" style="float: right;" role="button"></th>
+            </tr>
+        </thead>
+        <tbody>
+                <tr class="col">
+                    <td>Name</td>
+                    <td id="name"></td>
+                </tr>
+                <tr class="col">
+                    <td>Type</td>
+                    <td id="type"></td>
+                </tr>
+                <tr class="col">
+                    <td>Height</td>
+                    <td id="height"></td>
+                </tr>
+                <tr class="col">
+                    <td>Weight</td>
+                    <td id="weight"></td>
+                </tr>
+                <tr>
+                    <td><label id="abilityLabel"></label></td>
+                    <td id="ability"></td>
+                </tr>
+                <tr>
+                    <td>Overall</td>
+                    <td id="overall"></td>
+                </tr>
+        </tbody>
+    </table>
+    </div>
+    <script src="DejimonService.js"></script>
+    <script>
+        const searchParams = new URLSearchParams(window.location.search);
+        const id = searchParams.get('id');
+
+        var p = new DejimonServices();
+        const dejimon=p.getDejimonById(id);
+        if(dejimon){
+            const {name,type,ability:abilityvalue,height,weight} = dejimon;
+            document.getElementById('name').innerHTML=name;
+            document.getElementById('type').innerHTML=type;
+            document.getElementById('height').innerHTML=height + ' hocks';
+            document.getElementById('weight').innerHTML=weight + ' stones';
+            document.getElementById('ability').innerHTML=abilityvalue;
+
+            var ability='';
+            if(type == 'yorkshire'){
+                ability='Ice Ability';
+            }
+            else if(type == 'lean'){
+                ability='Fire Ability';
+            }
+            else if(type == 'potbelly'){
+                ability='Electric Ability';
+            }
+            document.getElementById('abilityLabel').innerHTML=ability;
+        }
+        else{
+            alert('no dejimon found');
+        }
+
+        const {height,weight,ability:abilityvalue}=dejimon;
+        var overallPower = (height+weight+abilityvalue)/3;
+        overallPower = Math.round(overallPower*100)/100;
+        document.getElementById('overall').innerHTML=overallPower;
+
+    </script>
+</body>
+</html>
