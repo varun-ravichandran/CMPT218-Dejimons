@@ -1,4 +1,4 @@
 # CMPT218-Dejimons
 
-* tsc -w (To Comile the ts file file)
+* tsc -w  ---> (To Compile the ts file)
 * run lite-server
